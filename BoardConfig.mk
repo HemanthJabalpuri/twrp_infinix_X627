@@ -61,7 +61,6 @@ TWRP_INCLUDE_LOGCAT := true
 TARGET_USES_LOGD := true
 TW_INCLUDE_CRYPTO := true
 TW_NO_USB_STORAGE := true
-DEVICE_RESOLUTION :=720x1340 
    
 ifeq ($(TARGET_USES_LOGD), true)
     RELINK_SOURCE_FILES += $(TARGET_OUT_EXECUTABLES)/logd
@@ -79,6 +78,7 @@ PLATFORM_VERSION := 16.1.0
 
 # TWRP Configuration
 TW_THEME := portrait_hdpi
+portrait_hdpi  = 720x1340
 TW_EXTRA_LANGUAGES := true
 TW_SCREEN_BLANK_ON_BOOT := true
 TW_INPUT_BLACKLIST := "hbtp_vm"
