@@ -6,9 +6,7 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/omni_Nova.mk
+    $(LOCAL_DIR)/omni_X627.mk
 
 COMMON_LUNCH_CHOICES := \
-    omni_Nova-user \
-    omni_Nova-userdebug \
-    omni_Nova-eng
+    omni_X627-eng

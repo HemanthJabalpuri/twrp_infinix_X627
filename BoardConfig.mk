@@ -5,7 +5,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-DEVICE_PATH := device/infinix/Nova
+DEVICE_PATH := device/infinix/X627
 
 # Architecture
 TARGET_ARCH := arm
@@ -15,7 +15,7 @@ TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_VARIANT := generic
 
 # Assert
-TARGET_OTA_ASSERT_DEVICE := Nova
+TARGET_OTA_ASSERT_DEVICE := X627
 
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := CY-X627-H624
