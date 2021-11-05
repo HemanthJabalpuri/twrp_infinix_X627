@@ -7,9 +7,6 @@
 
 DEVICE_PATH := device/infinix/Nova
 
-# For building with minimal manifest
-ALLOW_MISSING_DEPENDENCIES := true
-
 # Architecture
 TARGET_ARCH := arm
 TARGET_ARCH_VARIANT := armv7-a-neon
@@ -20,7 +17,7 @@ TARGET_CPU_VARIANT := generic
 # Assert
 TARGET_OTA_ASSERT_DEVICE := Nova
 
-# Bootloader"
+# Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := CY-X627-H624
 
 # File systems
@@ -48,10 +45,6 @@ BOARD_MKBOOTIMG_ARGS += --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOTIMG_HEADER_VERSION)
 BOARD_KERNEL_IMAGE_NAME := zImage-dtb
-TARGET_KERNEL_ARCH := arm
-TARGET_KERNEL_HEADER_ARCH := arm
-TARGET_KERNEL_SOURCE := kernel/infinix/Nova
-TARGET_KERNEL_CONFIG := Nova_defconfig
 
 # Platform
 TARGET_BOARD_PLATFORM := mt6761
@@ -61,15 +54,6 @@ TWRP_INCLUDE_LOGCAT := true
 TARGET_USES_LOGD := true
 TW_INCLUDE_CRYPTO := true
 TW_NO_USB_STORAGE := true
-   
-ifeq ($(TARGET_USES_LOGD), true)
-    RELINK_SOURCE_FILES += $(TARGET_OUT_EXECUTABLES)/logd
-    RELINK_SOURCE_FILES += $(TARGET_OUT_SHARED_LIBRARIES)/libsysutils.so
-    RELINK_SOURCE_FILES += $(TARGET_OUT_SHARED_LIBRARIES)/libnl.so
-endif
-ifeq ($(TWRP_INCLUDE_LOGCAT), true)
-    RELINK_SOURCE_FILES += $(TARGET_OUT_EXECUTABLES)/logcat
-endif
 
 # Hack: prevent anti rollback
 PLATFORM_SECURITY_PATCH := 2099-12-31
@@ -78,8 +62,6 @@ PLATFORM_VERSION := 16.1.0
 
 # TWRP Configuration
 TW_THEME := portrait_hdpi
-portrait_hdpi  = 720x1340
 TW_EXTRA_LANGUAGES := true
 TW_SCREEN_BLANK_ON_BOOT := true
 TW_INPUT_BLACKLIST := "hbtp_vm"
-TW_USE_TOOLBOX := true

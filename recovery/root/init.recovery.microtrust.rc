@@ -3,11 +3,10 @@
 
 # For Microtrust internal development
 service teei_daemon /vendor/bin/teei_daemon
-    class core
-    user system
-    group system
+    user root
+    group root
     disabled
-   # oneshot
+    seclabel u:r:recovery:s0
 
 on boot
     chown system system /sys/bus/platform/devices/utos/dcih_notify_test
