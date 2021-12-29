@@ -8,9 +8,6 @@
 # Inherit from those products. Most specific first.
 $(call inherit-product-if-exists, $(SRC_TARGET_DIR)/product/embedded.mk)
 
-# Inherit from Nova device
-$(call inherit-product, device/infinix/Nova/device.mk)
-
 # Inherit some common Omni stuff.
 $(call inherit-product, vendor/omni/config/common.mk)
 
