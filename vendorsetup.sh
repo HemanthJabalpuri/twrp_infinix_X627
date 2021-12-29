@@ -5,10 +5,6 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/omni_Nova.mk
-
-COMMON_LUNCH_CHOICES := \
-    omni_Nova-user \
-    omni_Nova-userdebug \
-    omni_Nova-eng
+add_lunch_combo omni_Nova-user
+add_lunch_combo omni_Nova-userdebug
+add_lunch_combo omni_Nova-eng

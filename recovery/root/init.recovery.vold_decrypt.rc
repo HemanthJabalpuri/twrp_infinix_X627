@@ -1,0 +1,98 @@
+import /init.recovery.microtrust.rc
+
+on init
+    export LD_LIBRARY_PATH /vendor/lib:/vendor/lib/hw:/system/lib:/system/lib/hw:/vendor/lib/mediacas:/vendor/lib/mediadrm:/system/lib/vndk-28:system/lib/vndk-sp-28
+
+    mkdir /mnt/vendor/persist 0700 root root
+    mount ext4 /dev/block/platform/bootdevice/by-name/persist /mnt/vendor/persist
+    
+    start hwservicemanager
+    start servicemanager
+    start teei_daemon
+    start vold
+    
+service hwservicemanager /sbin/hwservicemanager
+    user root
+    group root
+    onrestart setprop hwservicemanager.ready false
+    disabled
+    seclabel u:r:recovery:s0
+
+service servicemanager /sbin/servicemanager
+    user root
+    group root readproc
+    disabled
+    seclabel u:r:recovery:s0
+
+service gatekeeperd /sbin/gatekeeperd
+    user root
+    group root drmrpc readproc
+    disabled
+    seclabel u:r:recovery:s0
+    
+    service vold /sbin/vold
+    user root
+    group root
+    disabled
+    seclabel u:r:recovery:s0
+
+service keystore /sbin/keystore /tmp/misc/keystore
+    user root
+    group root drmrpc readproc
+    disabled
+    seclabel u:r:recovery:s0
+    
+service vold /sbin/vold
+    user root
+    group root
+    disabled
+    seclabel u:r:recovery:s0
+
+service gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service
+    user root
+    group root drmrpc
+    disabled
+    seclabel u:r:recovery:s0
+    
+ service teei_daemon /sbin/teei_daemon -r 07170000000000000000000000000000 -r 020f0000000000000000000000000000 -r 05120000000000000000000000000000 -r 070b0000000000000000000000000000 -r 020b0000000000000000000000000000 -r 05070000000000000000000000000000 -r 030b0000000000000000000000000000 -r 030c0000000000000000000000000000 -r 07070000000000000000000000000000 -r 5020170115e016302017012521300000 -r 40188311faf343488db888ad39496f9a
+    user root
+    group root drmrpc
+    disabled
+    oneshot
+    seclabel u:r:recovery:s0
+
+service keymaster-3-0 /vendor/bin/hw/android.hardware.keymaster@3.0-service
+    user root
+    group root drmrpc
+    disabled
+    seclabel u:r:recovery:s0
+    
+ service teei_daemon /sbin/teei_daemon -r 07170000000000000000000000000000 -r 020f0000000000000000000000000000 -r 05120000000000000000000000000000 -r 070b0000000000000000000000000000 -r 020b0000000000000000000000000000 -r 05070000000000000000000000000000 -r 030b0000000000000000000000000000 -r 030c0000000000000000000000000000 -r 07070000000000000000000000000000 -r 5020170115e016302017012521300000 -r 40188311faf343488db888ad39496f9a
+    user root
+    group root drmrpc
+    disabled
+    seclabel u:r:recovery:s0
+
+on property:ro.crypto.state=unsupported
+    stop teei_daemon
+    stop keymaster-3-0
+    stop gatekeeper-1-0
+    stop gatekeeperd
+    stop servicemanager
+    stop hwservicemanager
+    
+on property:ro.crypto.state=unencrypted
+    stop teei_daemon
+    stop keymaster-3-0
+    stop gatekeeper-1-0
+    stop gatekeeperd
+    stop servicemanager
+    stop hwservicemanager
+    
+on property:twrp.decrypt.done=true
+    stop teei_daemon
+    stop keymaster-3-0
+    stop gatekeeper-1-0
+    stop gatekeeperd
+    stop servicemanager
+    stop hwservicemanager
