@@ -1,0 +1,45 @@
+import /init.recovery.microtrust.rc
+
+on init
+    export LD_LIBRARY_PATH /vendor/lib:/vendor/lib/hw:/system/lib:/system/lib/hw:/vendor/lib/mediacas:/vendor/lib/mediadrm:/system/lib/vndk-28:system/lib/vndk-sp-28
+
+    mkdir /mnt/vendor/persist 0700 root root
+    mount ext4 /dev/block/platform/bootdevice/by-name/persist /mnt/vendor/persist
+
+on fs
+    start hwservicemanager
+    start servicemanager
+    
+service hwservicemanager /sbin/hwservicemanager
+    user root
+    group root
+    onrestart setprop hwservicemanager.ready false
+    disabled
+    seclabel u:r:recovery:s0
+
+service servicemanager /sbin/servicemanager
+    user root
+    group root readproc
+    disabled
+    seclabel u:r:recovery:s0
+
+service keystore /sbin/keystore /tmp/misc/keystore
+    user root
+    group root drmrpc readproc
+    disabled
+    seclabel u:r:recovery:s0
+    
+on property:ro.crypto.state=unsupported
+    stop teei_daemon
+    stop servicemanager
+    stop hwservicemanager
+    
+on property:ro.crypto.state=unencrypted
+    stop teei_daemon
+    stop servicemanager
+    stop hwservicemanager
+
+on property:twrp.decrypt.done=true
+    stop teei_daemon
+    stop servicemanager
+    stop hwservicemanager
